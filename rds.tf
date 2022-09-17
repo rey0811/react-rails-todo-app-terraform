@@ -23,7 +23,7 @@ resource "aws_rds_cluster" "todo_prd_db" {
   engine_mode                         = "provisioned"
   engine_version                      = "5.7.mysql_aurora.2.10.2"
   iam_database_authentication_enabled = "false"
-  master_username                     = "admin"
+  master_username                     = "${var.rds_master_username}"
   master_password                     = "${var.rds_master_password}"
   network_type                        = "IPV4"
   port                                = "3306"

@@ -13,23 +13,18 @@ variable "region" {
   default     = "ap-northeast-1"
 }
 
-variable "hosted_zone_id" {
-  description = "Hosted zone id"
-  default     = "HOSTED_ZONE_ID"
-}
-
 variable "x_api_key" {
-  description = "x-api-key"
+  description = "x-api-key value"
   default     = "X_API_KEY"
 }
 
 variable "x_via_cloudfront_key" {
-  description = "x-via-cloudfront-key"
+  description = "x-via-cloudfront-key value"
   default     = "X_VIA_CLOUDFRONT_KEY"
 }
 
 variable "todo_app_database_url" {
-  description = "todo_app_database_url"
+  description = "todo_app_database_url value in the form of mysql2://RDS_MASTER_USERNAME:RDS_MASTER_PASSWORD@RDS_ENDPOINT"
   default     = "TODO_APP_DATABASE_URL"
 }
 
@@ -39,7 +34,7 @@ variable "todo_app_rails_master_key" {
 }
 
 variable "docker_dir" {
-  description = "docker_dir"
+  description = "Path to directory that has Dockerfile"
   default     = "DOCKER_DIR"
 }
 
@@ -48,8 +43,13 @@ variable "my_domain" {
   default     = "MY_DOMAIN"
 }
 
+variable "rds_master_username" {
+  description = "rds_master_username"
+  default     = "RDS_MASTER_USERNAME"
+}
+
 variable "rds_master_password" {
-  description = "my_domain"
+  description = "rds_master_password"
   default     = "RDS_MASTER_PASSWORD"
 }
 
