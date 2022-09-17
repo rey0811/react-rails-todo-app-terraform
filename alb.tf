@@ -11,18 +11,18 @@ resource "aws_lb" "todo_prd_api_alb" {
   name                       = "todo-prd-api-alb"
   preserve_host_header       = "false"
   security_groups            = ["${aws_security_group.todo_prd_front_sg.id}"]
-  subnets = ["${aws_subnet.todo_prd_front_sn_a.id}", "${aws_subnet.todo_prd_front_sn_c.id}"]
+  subnets                    = ["${aws_subnet.todo_prd_front_sn_a.id}", "${aws_subnet.todo_prd_front_sn_c.id}"]
 }
 
 resource "aws_lb_listener" "todo_prd_api_alb_listener" {
-  certificate_arn = "${data.aws_acm_certificate.alb.arn}"
+  certificate_arn = data.aws_acm_certificate.alb.arn
 
   default_action {
-    target_group_arn = "${aws_lb_target_group.todo_prd_api_tg.arn}"
+    target_group_arn = aws_lb_target_group.todo_prd_api_tg.arn
     type             = "forward"
   }
 
-  load_balancer_arn = "${aws_lb.todo_prd_api_alb.id}"
+  load_balancer_arn = aws_lb.todo_prd_api_alb.id
   port              = "443"
   protocol          = "HTTPS"
   ssl_policy        = "ELBSecurityPolicy-2016-08"
@@ -31,7 +31,7 @@ resource "aws_lb_listener" "todo_prd_api_alb_listener" {
 resource "aws_lb_listener_rule" "todo_prd_api_alb_listener_rule" {
   action {
     order            = "1"
-    target_group_arn = "${aws_lb_target_group.todo_prd_api_tg.arn}"
+    target_group_arn = aws_lb_target_group.todo_prd_api_tg.arn
     type             = "forward"
   }
 
@@ -41,7 +41,7 @@ resource "aws_lb_listener_rule" "todo_prd_api_alb_listener_rule" {
     }
   }
 
-  listener_arn = "${aws_lb_listener.todo_prd_api_alb_listener.arn}"
+  listener_arn = aws_lb_listener.todo_prd_api_alb_listener.arn
   priority     = "1"
 }
 
@@ -74,5 +74,5 @@ resource "aws_lb_target_group" "todo_prd_api_tg" {
   }
 
   target_type = "ip"
-  vpc_id      = "${aws_vpc.todo_prd_vpc.id}"
+  vpc_id      = aws_vpc.todo_prd_vpc.id
 }

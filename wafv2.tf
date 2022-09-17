@@ -70,7 +70,7 @@ resource "aws_wafv2_web_acl" "todo_prd_api_cf_waf" {
             }
 
             positional_constraint = "EXACTLY"
-            search_string         = "${var.x_api_key}"
+            search_string         = var.x_api_key
 
             text_transformation {
               priority = "0"
@@ -260,7 +260,7 @@ resource "aws_wafv2_web_acl" "todo_prd_api_alb_waf" {
             }
 
             positional_constraint = "EXACTLY"
-            search_string         = "${var.x_via_cloudfront_key}"
+            search_string         = var.x_via_cloudfront_key
 
             text_transformation {
               priority = "0"
@@ -288,8 +288,8 @@ resource "aws_wafv2_web_acl" "todo_prd_api_alb_waf" {
 }
 
 resource "aws_wafv2_web_acl_association" "alb" {
-  resource_arn = "${aws_lb.todo_prd_api_alb.arn}"
-  web_acl_arn  = "${aws_wafv2_web_acl.todo_prd_api_alb_waf.arn}"
+  resource_arn = aws_lb.todo_prd_api_alb.arn
+  web_acl_arn  = aws_wafv2_web_acl.todo_prd_api_alb_waf.arn
 }
 
 /*

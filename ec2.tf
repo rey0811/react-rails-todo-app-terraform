@@ -24,11 +24,11 @@ resource "aws_instance" "todo_bastion" {
 
   get_password_data                    = "false"
   hibernation                          = "false"
-  iam_instance_profile                 = "${aws_iam_instance_profile.todo_ec2_role.name}"
+  iam_instance_profile                 = aws_iam_instance_profile.todo_ec2_role.name
   instance_initiated_shutdown_behavior = "stop"
   instance_type                        = "t3.micro"
   ipv6_address_count                   = "0"
-  key_name                             = "${var.ec2_keypair}"
+  key_name                             = var.ec2_keypair
 
   maintenance_options {
     auto_recovery = "default"
@@ -57,7 +57,7 @@ resource "aws_instance" "todo_bastion" {
   }
 
   source_dest_check = "true"
-  subnet_id         = "${aws_subnet.todo_prd_app_sn_a.id}"
+  subnet_id         = aws_subnet.todo_prd_app_sn_a.id
 
   tags = {
     Name = "todo-bastion"
@@ -73,5 +73,5 @@ resource "aws_instance" "todo_bastion" {
 
 resource "aws_iam_instance_profile" "todo_ec2_role" {
   name = "todo_ec2_role"
-  role = "${aws_iam_role.todo_ec2_role.name}"
+  role = aws_iam_role.todo_ec2_role.name
 }

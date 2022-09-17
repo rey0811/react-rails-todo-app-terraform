@@ -4,7 +4,7 @@ resource "aws_ssm_parameter" "todo_app_database_url" {
   name      = "todo_app_database_url"
   tier      = "Standard"
   type      = "String"
-  value     = "${var.todo_app_database_url}"
+  value     = var.todo_app_database_url
 }
 
 resource "aws_ssm_parameter" "todo_app_rails_master_key" {
@@ -13,5 +13,5 @@ resource "aws_ssm_parameter" "todo_app_rails_master_key" {
   name      = "todo_app_rails_master_key"
   tier      = "Standard"
   type      = "String"
-  value     = "${var.todo_app_rails_master_key}"
+  value     = var.todo_app_rails_master_key
 }

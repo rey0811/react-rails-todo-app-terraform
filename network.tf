@@ -33,7 +33,7 @@ resource "aws_subnet" "todo_prd_front_sn_a" {
     Name = "todo-prd-front-sn-a"
   }
 
-  vpc_id = "${aws_vpc.todo_prd_vpc.id}"
+  vpc_id = aws_vpc.todo_prd_vpc.id
 }
 
 resource "aws_subnet" "todo_prd_front_sn_c" {
@@ -55,7 +55,7 @@ resource "aws_subnet" "todo_prd_front_sn_c" {
     Name = "todo-prd-front-sn-c"
   }
 
-  vpc_id = "${aws_vpc.todo_prd_vpc.id}"
+  vpc_id = aws_vpc.todo_prd_vpc.id
 }
 
 resource "aws_subnet" "todo_prd_app_sn_a" {
@@ -77,7 +77,7 @@ resource "aws_subnet" "todo_prd_app_sn_a" {
     Name = "todo-prd-app-sn-a"
   }
 
-  vpc_id = "${aws_vpc.todo_prd_vpc.id}"
+  vpc_id = aws_vpc.todo_prd_vpc.id
 }
 
 resource "aws_subnet" "todo_prd_app_sn_c" {
@@ -99,7 +99,7 @@ resource "aws_subnet" "todo_prd_app_sn_c" {
     Name = "todo-prd-app-sn-c"
   }
 
-  vpc_id = "${aws_vpc.todo_prd_vpc.id}"
+  vpc_id = aws_vpc.todo_prd_vpc.id
 }
 
 resource "aws_subnet" "todo_prd_db_sn_a" {
@@ -120,7 +120,7 @@ resource "aws_subnet" "todo_prd_db_sn_a" {
   tags_all = {
     Name = "todo-prd-db-sn-a"
   }
-  vpc_id = "${aws_vpc.todo_prd_vpc.id}"
+  vpc_id = aws_vpc.todo_prd_vpc.id
 }
 
 resource "aws_subnet" "todo_prd_db_sn_c" {
@@ -141,37 +141,37 @@ resource "aws_subnet" "todo_prd_db_sn_c" {
   tags_all = {
     Name = "todo-prd-db-sn-c"
   }
-  vpc_id = "${aws_vpc.todo_prd_vpc.id}"
+  vpc_id = aws_vpc.todo_prd_vpc.id
 }
 
-resource "aws_route_table_association" "todo_prd_front_sn_a"{
-  route_table_id = "${aws_route_table.todo_prd_public_rt_a.id}"
-  subnet_id      = "${aws_subnet.todo_prd_front_sn_a.id}"
+resource "aws_route_table_association" "todo_prd_front_sn_a" {
+  route_table_id = aws_route_table.todo_prd_public_rt_a.id
+  subnet_id      = aws_subnet.todo_prd_front_sn_a.id
 }
 
-resource "aws_route_table_association" "todo_prd_front_sn_c"{
-  route_table_id = "${aws_route_table.todo_prd_public_rt_c.id}"
-  subnet_id      = "${aws_subnet.todo_prd_front_sn_c.id}"
+resource "aws_route_table_association" "todo_prd_front_sn_c" {
+  route_table_id = aws_route_table.todo_prd_public_rt_c.id
+  subnet_id      = aws_subnet.todo_prd_front_sn_c.id
 }
 
-resource "aws_route_table_association" "todo_prd_app_sn_a"{
-  route_table_id = "${aws_route_table.todo_prd_private_rt_a.id}"
-  subnet_id      = "${aws_subnet.todo_prd_app_sn_a.id}"
+resource "aws_route_table_association" "todo_prd_app_sn_a" {
+  route_table_id = aws_route_table.todo_prd_private_rt_a.id
+  subnet_id      = aws_subnet.todo_prd_app_sn_a.id
 }
 
-resource "aws_route_table_association" "todo_prd_app_sn_c"{
-  route_table_id = "${aws_route_table.todo_prd_private_rt_c.id}"
-  subnet_id      = "${aws_subnet.todo_prd_app_sn_c.id}"
+resource "aws_route_table_association" "todo_prd_app_sn_c" {
+  route_table_id = aws_route_table.todo_prd_private_rt_c.id
+  subnet_id      = aws_subnet.todo_prd_app_sn_c.id
 }
 
-resource "aws_route_table_association" "todo_prd_db_sn_a"{
-  route_table_id = "${aws_route_table.todo_prd_private_rt_a.id}"
-  subnet_id      = "${aws_subnet.todo_prd_db_sn_a.id}"
+resource "aws_route_table_association" "todo_prd_db_sn_a" {
+  route_table_id = aws_route_table.todo_prd_private_rt_a.id
+  subnet_id      = aws_subnet.todo_prd_db_sn_a.id
 }
 
-resource "aws_route_table_association" "todo_prd_db_sn_c"{
-  route_table_id = "${aws_route_table.todo_prd_private_rt_c.id}"
-  subnet_id      = "${aws_subnet.todo_prd_db_sn_c.id}"
+resource "aws_route_table_association" "todo_prd_db_sn_c" {
+  route_table_id = aws_route_table.todo_prd_private_rt_c.id
+  subnet_id      = aws_subnet.todo_prd_db_sn_c.id
 }
 
 resource "aws_internet_gateway" "todo_prd_igw" {
@@ -183,21 +183,21 @@ resource "aws_internet_gateway" "todo_prd_igw" {
     Name = "todo-prd-igw"
   }
 
-  vpc_id = "${aws_vpc.todo_prd_vpc.id}"
+  vpc_id = aws_vpc.todo_prd_vpc.id
 }
 
 resource "aws_eip" "todo_prd_ngw_a" {
-  vpc      = true
+  vpc = true
 }
 
 resource "aws_eip" "todo_prd_ngw_c" {
-  vpc      = true
+  vpc = true
 }
 
 resource "aws_nat_gateway" "todo_prd_ngw_a" {
-  allocation_id     = "${aws_eip.todo_prd_ngw_a.id}"
+  allocation_id     = aws_eip.todo_prd_ngw_a.id
   connectivity_type = "public"
-  subnet_id         = "${aws_subnet.todo_prd_front_sn_a.id}"
+  subnet_id         = aws_subnet.todo_prd_front_sn_a.id
 
   tags = {
     Name = "todo-prd-ngw-a"
@@ -209,9 +209,9 @@ resource "aws_nat_gateway" "todo_prd_ngw_a" {
 }
 
 resource "aws_nat_gateway" "todo_prd_ngw_c" {
-  allocation_id     = "${aws_eip.todo_prd_ngw_c.id}"
+  allocation_id     = aws_eip.todo_prd_ngw_c.id
   connectivity_type = "public"
-  subnet_id         = "${aws_subnet.todo_prd_front_sn_c.id}"
+  subnet_id         = aws_subnet.todo_prd_front_sn_c.id
 
   tags = {
     Name = "todo-prd-ngw-c"
@@ -225,7 +225,7 @@ resource "aws_nat_gateway" "todo_prd_ngw_c" {
 resource "aws_route_table" "todo_prd_public_rt_a" {
   route {
     cidr_block = "0.0.0.0/0"
-    gateway_id = "${aws_internet_gateway.todo_prd_igw.id}"
+    gateway_id = aws_internet_gateway.todo_prd_igw.id
   }
 
   tags = {
@@ -236,13 +236,13 @@ resource "aws_route_table" "todo_prd_public_rt_a" {
     Name = "todo-prd-public-rt-a"
   }
 
-  vpc_id = "${aws_vpc.todo_prd_vpc.id}"
+  vpc_id = aws_vpc.todo_prd_vpc.id
 }
 
 resource "aws_route_table" "todo_prd_public_rt_c" {
   route {
     cidr_block = "0.0.0.0/0"
-    gateway_id = "${aws_internet_gateway.todo_prd_igw.id}"
+    gateway_id = aws_internet_gateway.todo_prd_igw.id
   }
 
   tags = {
@@ -253,13 +253,13 @@ resource "aws_route_table" "todo_prd_public_rt_c" {
     Name = "todo-prd-public-rt-c"
   }
 
-  vpc_id = "${aws_vpc.todo_prd_vpc.id}"
+  vpc_id = aws_vpc.todo_prd_vpc.id
 }
 
 resource "aws_route_table" "todo_prd_private_rt_a" {
   route {
     cidr_block     = "0.0.0.0/0"
-    nat_gateway_id = "${aws_nat_gateway.todo_prd_ngw_a.id}"
+    nat_gateway_id = aws_nat_gateway.todo_prd_ngw_a.id
   }
 
   tags = {
@@ -270,13 +270,13 @@ resource "aws_route_table" "todo_prd_private_rt_a" {
     Name = "todo-prd-private-rt-a"
   }
 
-  vpc_id = "${aws_vpc.todo_prd_vpc.id}"
+  vpc_id = aws_vpc.todo_prd_vpc.id
 }
 
 resource "aws_route_table" "todo_prd_private_rt_c" {
   route {
     cidr_block     = "0.0.0.0/0"
-    nat_gateway_id = "${aws_nat_gateway.todo_prd_ngw_c.id}"
+    nat_gateway_id = aws_nat_gateway.todo_prd_ngw_c.id
   }
 
   tags = {
@@ -287,7 +287,7 @@ resource "aws_route_table" "todo_prd_private_rt_c" {
     Name = "todo-prd-private-rt-c"
   }
 
-  vpc_id = "${aws_vpc.todo_prd_vpc.id}"
+  vpc_id = aws_vpc.todo_prd_vpc.id
 }
 
 resource "aws_security_group" "todo_bastion_sg" {
@@ -302,7 +302,7 @@ resource "aws_security_group" "todo_bastion_sg" {
   }
 
   name   = "todo-bastion-sg"
-  vpc_id = "${aws_vpc.todo_prd_vpc.id}"
+  vpc_id = aws_vpc.todo_prd_vpc.id
 }
 
 resource "aws_security_group" "todo_prd_front_sg" {
@@ -326,7 +326,7 @@ resource "aws_security_group" "todo_prd_front_sg" {
   }
 
   name   = "todo-prd-front-sg"
-  vpc_id = "${aws_vpc.todo_prd_vpc.id}"
+  vpc_id = aws_vpc.todo_prd_vpc.id
 }
 
 resource "aws_security_group" "todo_prd_app_sg" {
@@ -349,7 +349,7 @@ resource "aws_security_group" "todo_prd_app_sg" {
   }
 
   name   = "todo-prd-app-sg"
-  vpc_id = "${aws_vpc.todo_prd_vpc.id}"
+  vpc_id = aws_vpc.todo_prd_vpc.id
 }
 
 resource "aws_security_group" "todo_prd_db_sg" {
@@ -382,5 +382,5 @@ resource "aws_security_group" "todo_prd_db_sg" {
   }
 
   name   = "todo-prd-db-sg"
-  vpc_id = "${aws_vpc.todo_prd_vpc.id}"
+  vpc_id = aws_vpc.todo_prd_vpc.id
 }
