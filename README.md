@@ -1,6 +1,15 @@
 # Overview
 This terraform script generates all AWS environments except for part of Route 53 and ACM resources.
 
+## 0. Prerequisite
+
+```
+terraform --version
+Terraform v1.2.9
+on darwin_amd64
++ provider registry.terraform.io/hashicorp/aws v4.30.0
++ provider registry.terraform.io/hashicorp/null v3.1.1
+```
 ## 1. How to create new environment
 ---
 ### A. Manual preparation
