@@ -1,6 +1,6 @@
 resource "aws_vpc" "todo_prd_vpc" {
   assign_generated_ipv6_cidr_block = "false"
-  cidr_block                       = "192.168.0.0/20"
+  cidr_block                       = "192.168.0.0/16"
   enable_dns_hostnames             = "false"
   enable_dns_support               = "true"
   instance_tenancy                 = "default"
@@ -16,7 +16,8 @@ resource "aws_vpc" "todo_prd_vpc" {
 
 resource "aws_subnet" "todo_prd_front_sn_a" {
   assign_ipv6_address_on_creation                = "false"
-  cidr_block                                     = "192.168.2.0/24"
+  cidr_block                                     = "192.168.10.0/24"
+  availability_zone                              = "ap-northeast-1a"
   enable_dns64                                   = "false"
   enable_resource_name_dns_a_record_on_launch    = "false"
   enable_resource_name_dns_aaaa_record_on_launch = "false"
@@ -37,7 +38,8 @@ resource "aws_subnet" "todo_prd_front_sn_a" {
 
 resource "aws_subnet" "todo_prd_front_sn_c" {
   assign_ipv6_address_on_creation                = "false"
-  cidr_block                                     = "192.168.3.0/24"
+  cidr_block                                     = "192.168.20.0/24"
+  availability_zone                              = "ap-northeast-1c"
   enable_dns64                                   = "false"
   enable_resource_name_dns_a_record_on_launch    = "false"
   enable_resource_name_dns_aaaa_record_on_launch = "false"
@@ -58,7 +60,8 @@ resource "aws_subnet" "todo_prd_front_sn_c" {
 
 resource "aws_subnet" "todo_prd_app_sn_a" {
   assign_ipv6_address_on_creation                = "false"
-  cidr_block                                     = "192.168.4.0/24"
+  cidr_block                                     = "192.168.30.0/24"
+  availability_zone                              = "ap-northeast-1a"
   enable_dns64                                   = "false"
   enable_resource_name_dns_a_record_on_launch    = "false"
   enable_resource_name_dns_aaaa_record_on_launch = "false"
@@ -79,7 +82,8 @@ resource "aws_subnet" "todo_prd_app_sn_a" {
 
 resource "aws_subnet" "todo_prd_app_sn_c" {
   assign_ipv6_address_on_creation                = "false"
-  cidr_block                                     = "192.168.5.0/24"
+  cidr_block                                     = "192.168.40.0/24"
+  availability_zone                              = "ap-northeast-1c"
   enable_dns64                                   = "false"
   enable_resource_name_dns_a_record_on_launch    = "false"
   enable_resource_name_dns_aaaa_record_on_launch = "false"
@@ -100,7 +104,8 @@ resource "aws_subnet" "todo_prd_app_sn_c" {
 
 resource "aws_subnet" "todo_prd_db_sn_a" {
   assign_ipv6_address_on_creation                = "false"
-  cidr_block                                     = "192.168.6.0/24"
+  cidr_block                                     = "192.168.50.0/24"
+  availability_zone                              = "ap-northeast-1a"
   enable_dns64                                   = "false"
   enable_resource_name_dns_a_record_on_launch    = "false"
   enable_resource_name_dns_aaaa_record_on_launch = "false"
@@ -120,7 +125,8 @@ resource "aws_subnet" "todo_prd_db_sn_a" {
 
 resource "aws_subnet" "todo_prd_db_sn_c" {
   assign_ipv6_address_on_creation                = "false"
-  cidr_block                                     = "192.168.7.0/24"
+  cidr_block                                     = "192.168.60.0/24"
+  availability_zone                              = "ap-northeast-1c"
   enable_dns64                                   = "false"
   enable_resource_name_dns_a_record_on_launch    = "false"
   enable_resource_name_dns_aaaa_record_on_launch = "false"
@@ -180,8 +186,16 @@ resource "aws_internet_gateway" "todo_prd_igw" {
   vpc_id = "${aws_vpc.todo_prd_vpc.id}"
 }
 
+resource "aws_eip" "todo_prd_ngw_a" {
+  vpc      = true
+}
+
+resource "aws_eip" "todo_prd_ngw_c" {
+  vpc      = true
+}
+
 resource "aws_nat_gateway" "todo_prd_ngw_a" {
-  allocation_id     = "eipalloc-07b7c07d0e269bbf5"
+  allocation_id     = "${aws_eip.todo_prd_ngw_a.id}"
   connectivity_type = "public"
   subnet_id         = "${aws_subnet.todo_prd_front_sn_a.id}"
 
@@ -195,7 +209,7 @@ resource "aws_nat_gateway" "todo_prd_ngw_a" {
 }
 
 resource "aws_nat_gateway" "todo_prd_ngw_c" {
-  allocation_id     = "eipalloc-08922100fbd780192"
+  allocation_id     = "${aws_eip.todo_prd_ngw_c.id}"
   connectivity_type = "public"
   subnet_id         = "${aws_subnet.todo_prd_front_sn_c.id}"
 

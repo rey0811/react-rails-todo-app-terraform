@@ -125,6 +125,7 @@ POLICY
   max_session_duration = "3600"
   name                 = "todo-ecs-task-execution-role"
   path                 = "/"
+  depends_on = [aws_iam_policy.custom_ecs_task_execution_policy]
 }
 
 resource "aws_iam_role" "todo_ecs_task_role" {
@@ -149,6 +150,7 @@ POLICY
   max_session_duration = "3600"
   name                 = "todo-ecs-task-role"
   path                 = "/"
+  depends_on = [aws_iam_policy.custom_ecs_task_policy]
 }
 
 resource "aws_iam_role" "todo_ec2_role" {
@@ -199,4 +201,5 @@ POLICY
   max_session_duration = "3600"
   name                 = "todo-github-cicd-role"
   path                 = "/"
+  depends_on = [aws_iam_policy.custom_githubactions_policy]
 }
