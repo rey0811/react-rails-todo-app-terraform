@@ -22,7 +22,9 @@ on darwin_amd64
 
 ### B. Terraform command
 
-- Run `terraform apply` at the top directory
+- Go to top directory
+- Run `terraform init`
+- Run `terraform apply`
 ## 2. How to connect to RDS via SSM
 - Install Session Manager Plugin in reference to [Install the Session Manager plugin for the AWS CLI](https://docs.aws.amazon.com/systems-manager/latest/userguide/session-manager-working-with-install-plugin.html)
 - Add the below setting in `~/.ssh/config`
