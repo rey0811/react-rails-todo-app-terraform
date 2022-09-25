@@ -23,11 +23,6 @@ variable "x_via_cloudfront_key" {
   default     = "X_VIA_CLOUDFRONT_KEY"
 }
 
-variable "todo_app_database_url" {
-  description = "todo_app_database_url value in the form of mysql2://RDS_MASTER_USERNAME:RDS_MASTER_PASSWORD@RDS_ENDPOINT"
-  default     = "TODO_APP_DATABASE_URL"
-}
-
 variable "todo_app_rails_master_key" {
   description = "todo_app_rails_master_key"
   default     = "TODO_APP_DATABASE_URL"
